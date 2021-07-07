@@ -18,37 +18,38 @@
   </a>
 </p>
 
-## Introduction
+## 소개
 
 [swr.vercel.app](https://swr.vercel.app)
 
-SWR is a React Hooks library for remote data fetching.
+SWR은 원격 데이터를 가져오기 위한 React Hooks 라이브러리 입니다.
 
-The name “**SWR**” is derived from `stale-while-revalidate`, a cache invalidation strategy popularized by [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861).
-**SWR** first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again.
+'**SWR**'이라는 이름은 [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861)에서 널리 사용되는 캐시 무효화 전략인 'stale-while-revalidate'에서 파생되었습니다.
+**SWR**은 먼저 캐시에서 데이터를 반환 (stale) 한 다음, 가져오기 요청을 전송(revalidate)하고, 마지막으로 최신 데이터를 다시 제공합니다.
 
-It features:
+특징:
 
-- Transport and protocol agnostic data fetching
-- Fast page navigation
-- Revalidation on focus
-- Interval polling
-- Request deduplication
+- 전송 및 프로토콜에 구애받지 않는 데이터 가져오기 (Transport and protocol agnostic data fetching)
+- 빠른 페이지 탐색
+- 초점 재 검증
+- 인터벌 폴링
+- 중복 제거 요청(Request deduplication)
 - Local mutation
-- Pagination
-- TypeScript ready
-- SSR support
-- Suspense mode
-- React Native support
-- Minimal API
+- 페이지네이션(Pagination)
+- TypeScript 준비
+- SSR 지원
+- 서스펜스 모드
+- React Native 지원
+- 최소한의 API
 
-...and a lot more.
 
-With SWR, components will get **a stream of data updates constantly and automatically**. Thus, the UI will be always **fast** and **reactive**.
+...외에도 많이 있습니다.
+
+SWR을 사용하면 구성 요소가 **데이터 스트림을 지속적으로 자동 업데이트**합니다. 따라서 UI는 항상 **빠르고** ** 반응적**입니다.
 
 <br/>
 
-## Quick Start
+## 빠른 시작
 
 ```js
 import useSWR from 'swr'
@@ -62,30 +63,26 @@ function Profile() {
 }
 ```
 
-In this example, the React Hook `useSWR` accepts a `key` and a `fetcher` function.
-The `key` is a unique identifier of the request, normally the URL of the API. And the `fetcher` accepts
-`key` as its parameter and returns the data asynchronously.
+이 예제에서 React Hook `useSWR`은 `key`와 `fetcher` 함수를 받습니다.
+`key`는 요청의 고유 식별자이며, 일반적으로 API의 URL입니다. 그리고 `fetcher`는 `key`를 매개 변수로 받아들이고, 데이터를 비동기적으로 반환합니다.
 
-`useSWR` also returns 2 values: `data` and `error`. When the request (fetcher) is not yet finished,
-`data` will be `undefined`. And when we get a response, it sets `data` and `error` based on the result
-of `fetcher` and rerenders the component.
+`useSWR`은 `data`와 `error`의 2개 값도 반환합니다. 요청(fetcher)이 아직 완료되지 않은 경우 `data`는 `undefined`가 됩니다. 그리고 응답을 받으면 `fetcher`의 결과에 따라 `data`와 `error`를 설정하고 구성 요소를 다시 렌더링합니다.
 
-Note that `fetcher` can be any asynchronous function, so you can use your favourite data-fetching
-library to handle that part.
+`fetcher`는 모든 비동기 함수가 될 수 있으므로, 선호하는 데이터 가져오기(data-fetching) 라이브러리를 사용하여 해당 부분을 처리 할 수 있습니다.
 
-Check out [swr.vercel.app](https://swr.vercel.app) for more demos of SWR, and [Examples](#examples) for the best practices.
+SWR의 더 많은 데모는 [swr.vercel.app](https://swr.vercel.app)을 확인하고 권장 사항은 [예제](#examples)를 확인하세요.
 
 <br/>
 
-## Usage
+## 용례
 
-Inside your React project directory, run the following:
+React 프로젝트 디렉토리 내에서 다음을 실행하십시오.
 
 ```
 yarn add swr
 ```
 
-Or with npm:
+npm으로는 다음과 같이 실행 가능합니다.
 
 ```
 npm install swr
@@ -97,51 +94,50 @@ npm install swr
 const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 ```
 
-#### Parameters
+#### 매개 변수 (Parameters)
 
-- `key`: a unique key string for the request (or a function / array / null) [(advanced usage)](#conditional-fetching)
-- `fetcher`: (_optional_) a Promise returning function to fetch your data [(details)](#data-fetching)
-- `options`: (_optional_) an object of options for this SWR hook
+- `key`: 요청에 대한 고유 키 문자열 (또는 함수 / 배열 / null) [(고급 용례)](#conditional-fetching)
+- `fetcher`: (선택적) 데이터를 가져오는 Promise 반환 함수 [(details)](#data-fetching)
+- `options`: (선택적) 이 SWR 훅에 대한 옵션 객체
 
-#### Return Values
+#### 반환 값
 
-- `data`: data for the given key resolved by `fetcher` (or undefined if not loaded)
-- `error`: error thrown by `fetcher` (or undefined)
-- `isValidating`: if there's a request or revalidation loading
-- `mutate(data?, shouldRevalidate?)`: function to mutate the cached data
+- `data`: 주어진 키에 대한 데이터는 `fetcher`에 의해 확인됩니다 (로드되지 않은 경우 undefined).
+- `error`: `fetcher`에서 발생한 오류 (또는 undefined)
+- `isValidating`: 요청 또는 재검증 로딩이 있는 경우
+- `mutate(data?, shouldRevalidate?)`: 캐시된 데이터를 변경하는 함수
 
-#### Options
+#### 옵션
 
-- `suspense = false`: enable React Suspense mode [(details)](#suspense-mode)
-- `fetcher = window.fetch`: the default fetcher function
-- `initialData`: initial data to be returned (note: This is per-hook)
-- `revalidateOnMount`: enable or disable automatic revalidation when component is mounted (by default revalidation occurs on mount when initialData is not set, use this flag to force behavior)
-- `revalidateOnFocus = true`: auto revalidate when window gets focused
-- `revalidateOnReconnect = true`: automatically revalidate when the browser regains a network connection (via `navigator.onLine`)
-- `refreshInterval = 0`: polling interval (disabled by default)
-- `refreshWhenHidden = false`: polling when the window is invisible (if `refreshInterval` is enabled)
-- `refreshWhenOffline = false`: polling when the browser is offline (determined by `navigator.onLine`)
-- `shouldRetryOnError = true`: retry when fetcher has an error [(details)](#error-retries)
-- `dedupingInterval = 2000`: dedupe requests with the same key in this time span
-- `focusThrottleInterval = 5000`: only revalidate once during a time span
-- `loadingTimeout = 3000`: timeout to trigger the onLoadingSlow event
-- `errorRetryInterval = 5000`: error retry interval [(details)](#error-retries)
-- `errorRetryCount`: max error retry count [(details)](#error-retries)
-- `onLoadingSlow(key, config)`: callback function when a request takes too long to load (see `loadingTimeout`)
-- `onSuccess(data, key, config)`: callback function when a request finishes successfully
-- `onError(err, key, config)`: callback function when a request returns an error
-- `onErrorRetry(err, key, config, revalidate, revalidateOps)`: handler for [error retry](#error-retries)
-- `compare(a, b)`: comparison function used to detect when returned data has changed, to avoid spurious rerenders. By default, [`dequal/lite`](https://github.com/lukeed/dequal) is used.
-- `isPaused()`: function to detect whether pause revalidations, will ignore fetched data and errors when it returns `true`. Returns `false` by default.
+- `suspense = false`: React Suspense 모드 활성화 [(details)](#suspense-mode)
+- `fetcher = window.fetch`: 기본(default) fetcher 함수
+- `initialData`: 반환할 초기 데이터 (참고: This is per-hook)
+- `revalidateOnMount`: 구성 요소가 마운트 될 때 자동 재검증 활성화 또는 비활성화 (기본적으로 재검증은 initialData가 설정되지 않은 경우 마운트시 발생합니다. 이 플래그를 사용하여 동작을 강제하십시오.)
+- `revalidateOnFocus = true`: 창에 초점이 맞춰지면 자동 재 검증
+- `revalidateOnReconnect = true`: 브라우저가 네트워크 연결을 회복하면 자동으로 재 검증 (`navigator.onLine` 를 통해)
+- `refreshInterval = 0`: 폴링 간격 (기본적으로 비활성화 됨)
+- `refreshWhenHidden = false`: 창이 보이지 않을 때 폴링 (`refreshInterval`이 활성화 된 경우)
+- `refreshWhenOffline = false`: 브라우저가 오프라인일 때 폴링 (`navigator.onLine`에 의해 결정됨)
+- `shouldRetryOnError = true`: fetcher가 error가 있을 때 재시도 [(details)](#error-retries)
+- `dedupingInterval = 2000`: 이(this) 시간 범위에서 동일한 키를 사용하여 중복 제거 요청
+- `focusThrottleInterval = 5000`: 기간 동안 한 번만 재 검증
+- `loadingTimeout = 3000`: onLoadingSlow 이벤트를 트리거하는 시간 초과
+- `errorRetryInterval = 5000`: 오류 재시도 간격 [(details)](#error-retries)
+- `errorRetryCount`: 최대 오류 재시도 횟수 [(details)](#error-retries)
+- `onLoadingSlow(key, config)`: 요청이 로드되는데 너무 오래 걸리는 때 콜백 함수 (see `loadingTimeout`)
+- `onSuccess(data, key, config)`: 요청이 성공적으로 완료될 때 콜백 함수
+- `onError(err, key, config)`: 요청이 오류를 반환 할 때 콜백 함수
+- `onErrorRetry(err, key, config, revalidate, revalidateOps)`: [오류 재시도](#error-retries) 를 위한 핸들러
+- `compare(a, b)`: 스퓨리어스 리-렌더를 피하기 위해 반환된 데이터가 언제 변경되었는지 감지하는 데 사용되는 비교 함수. 기본적으로 [`dequal/lite`](https://github.com/lukeed/dequal)이 사용됩니다.
+- `isPaused()`: 재 검증 일시 중지 여부를 감지하는 함수는 `true`를 반환 할 때 가져온 데이터 및 오류를 무시합니다. 기본적으로 `false`를 반환합니다.
 
-When under a slow network (2G, <= 70Kbps), `errorRetryInterval` will be 10s, and
-`loadingTimeout` will be 5s by default.
+느린 네트워크 (2G, <= 70Kbps)에서 `errorRetryInterval`은 10초가 됩니다. `loadingTimeout`은 기본적으로 5초 입니다.
 
-You can also use a [global configuration](#global-configuration) to provide default options.
+[글로벌 구성](#global-configuration)을 사용하여 기본 옵션을 제공할 수도 있습니다.
 
 <br/>
 
-## Examples
+## 예시
 
 - [Global Configuration](#global-configuration)
 - [Data Fetching](#data-fetching)
@@ -158,11 +154,12 @@ You can also use a [global configuration](#global-configuration) to provide defa
 - [Prefetching Data](#prefetching-data)
 - [Request Deduplication](#request-deduplication)
 
-### Global Configuration
+### 전역 구성 (Global Configuration)
 
 The context `SWRConfig` can provide global configurations (`options`) for all SWR hooks.
+context `SWRConfig`는 모든 SWR Hooks에 대한 전역 구성(`options`)을 제공 할 수 있습니다.
 
-In this example, all SWRs will use the same fetcher provided to load JSON data, and refresh every 3 seconds by default:
+이 예에서 모든 SWR은 제공된 동일한 fetcher를 사용하여 JSON 데이터를 로드하고, 기본적으로 3초마다 새로고침을 합니다.
 
 ```js
 import useSWR, { SWRConfig } from 'swr'
@@ -188,10 +185,10 @@ function App() {
 }
 ```
 
-### Data Fetching
+### 데이터 가져오기 (Data Fetching)
 
-`fetcher` is a function that **accepts the `key`** of SWR, and returns a value or a Promise.
-You can use any library to handle data fetching, for example:
+`fetcher`는 SWR의 **`key`**를 받아들이고 값 또는 Promise를 반환하는 함수입니다.
+모든 라이브러리를 사용하여 데이터 가져 오기를 처리 할 수 있습니다. 예를 들면 다음과 같습니다.
 
 ```js
 import fetch from 'unfetch'
@@ -204,7 +201,7 @@ function App() {
 }
 ```
 
-Or using GraphQL:
+또는 GraphQL에서:
 
 ```js
 import { request } from 'graphql-request'
@@ -227,13 +224,13 @@ function App() {
 }
 ```
 
-_If you want to pass variables to a GraphQL query, check out [Multiple Arguments](#multiple-arguments)._
+GraphQL 쿼리에 변수를 전달하려면 [Multiple Arguments](#multiple-arguments)를 확인하십시오.
 
-Note that `fetcher` can be omitted from the parameters if it's provided globally.
+'fetcher'가 전역적으로 제공되는 경우, 매개 변수에서 생략할 수 있습니다.
 
-### Conditional Fetching
+### 조건부 가져 오기 (Conditional Fetching)
 
-Use `null` or pass a function as the `key` to `useSWR` to conditionally fetch data. If the functions throws an error or returns a falsy value, SWR will cancel the request.
+`null`을 사용하거나, `useSWR`에 `key`로 함수를 전달하여 조건부로 데이터를 가져옵니다. 함수에서 오류가 발생하거나 잘못된 값을 반환하면, SWR이 요청을 취소합니다.
 
 ```js
 // conditionally fetch
@@ -246,9 +243,9 @@ const { data } = useSWR(() => shouldFetch ? '/api/data' : null, fetcher)
 const { data } = useSWR(() => '/api/data?uid=' + user.id, fetcher)
 ```
 
-### Dependent Fetching
+### 종속 가져 오기(Dependent Fetching)
 
-SWR also allows you to fetch data that depends on other data. It ensures the maximum possible parallelism (avoiding waterfalls), as well as serial fetching when a piece of dynamic data is required for the next data fetch to happen.
+SWR을 사용하면 다른 데이터에 의존하는 데이터를 가져올 수도 있습니다. 다음 데이터 가져 오기를 위해 동적 데이터가 필요할 때, 직렬 가져 오기뿐 아니라 (waterfalls을 방지하는) 가능한 최대 병렬 처리를 보장합니다.
 
 ```js
 function MyProjects() {
@@ -265,47 +262,43 @@ function MyProjects() {
 }
 ```
 
-### Multiple Arguments
+### 여러 인수 (Multiple Arguments)
 
-In some scenarios, it's useful to pass multiple arguments (can be any value or object) to the `fetcher` function. For example:
+일부 시나리오에서, `fetcher` 함수에 여러 인수(모든 값 또는 객체일 수 있음)를 전달하는 것이 유용합니다. 예를 들면:
 
 ```js
 useSWR('/api/user', url => fetchWithToken(url, token))
 ```
 
-This is **incorrect**. Because the identifier (also the index of the cache) of the data is `'/api/user'`,
-so even if `token` changes, SWR will still have the same key and return the wrong data.
+이것은 **틀렸습니다**. 데이터의 식별자(이며 캐시의 인덱스)가 `'/api/user'`이기 때문에, `토큰`이 변경되더라도 SWR은 여전히 동일한 키를 가지고 잘못된 데이터를 반환합니다.
 
-Instead, you can use an **array** as the `key` parameter, which contains multiple arguments of `fetcher`:
+대신, `fetcher`의 여러 인수를 포함하는 **배열**을 `key` 매개 변수로 사용할 수 있습니다.
 
 ```js
 const { data: user } = useSWR(['/api/user', token], fetchWithToken)
 
-// ...and pass it as an argument to another query
+// ... 그리고 다른 쿼리에 인수로 전달
 const { data: orders } = useSWR(user ? ['/api/orders', user] : null, fetchWithUser)
 ```
 
-The key of the request is now the combination of both values. SWR **shallowly** compares
-the arguments on every render and triggers revalidation if any of them has changed.
-Keep in mind that you should not recreate objects when rendering, as they will be treated as different objects on every render:
+이제 요청의 핵심은 두 값의 조합입니다. SWR **shallowly**는 모든 렌더에서 인수를 비교하고, 변경된 항목이 있으면 재 검증을 트리거합니다.
+렌더링 할 때마다 개체가 다른 개체로 취급되므로, 개체를 다시 만들지 않아야 합니다.
 
 ```js
-// Don’t do this! Deps will be changed on every render.
+// 이러지 마세요! 렌더링 할 때마다 Deps가 변경됩니다.
 useSWR(['/api/user', { id }], query)
 
-// Instead, you should only pass “stable” values.
+// 대신, "안정된" 값만 전달해야 합니다.
 useSWR(['/api/user', id], (url, id) => query(url, { id }))
 ```
 
-Dan Abramov explains dependencies very well in [this blog post](https://overreacted.io/a-complete-guide-to-useeffect/#but-i-cant-put-this-function-inside-an-effect).
+Dan Abramov는 [다음 블로그 게시물](https://overreacted.io/a-complete-guide-to-useeffect/#but-i-cant-put-this-function-inside-an-effect)에서 종속성을 매우 잘 설명합니다.
 
-### Manually Revalidate
+### 수동 재 검증 (Manually Revalidate)
 
-You can broadcast a revalidation message globally to all SWRs with the same key by calling
-`mutate(key)`.
+`mutate(key)`를 호출하여 동일한 키를 가진 모든 SWR에 재 검증 메시지를 전역적으로 브로드 캐스트 할 수 있습니다.
 
-This example shows how to automatically refetch the login info (e.g.: inside `<Profile/>`)
-when the user clicks the “Logout” button.
+이 예제는 사용자가 "로그 아웃" 버튼을 클릭 할 때 로그인 정보 (예 :`<Profile />` 내부)를 자동으로 다시 가져 오는 방법을 보여줍니다.
 
 ```js
 import useSWR, { mutate } from 'swr'
@@ -315,10 +308,10 @@ function App() {
     <div>
       <Profile />
       <button onClick={() => {
-        // set the cookie as expired
+        // 쿠키를 만료로 설정
         document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
 
-        // tell all SWRs with this key to revalidate
+        // 이 키가 있는 모든 SWR에 재 검증하도록 지시
         mutate('/api/user')
       }}>
         Logout
@@ -328,13 +321,11 @@ function App() {
 }
 ```
 
-### Mutation and Post Request
+### 변경과 Post 요청 (Mutation and Post Request)
 
-In many cases, applying local mutations to data is a good way to make changes
-feel faster — no need to wait for the remote source of data.
+대부분의 경우, 데이터에 로컬 변경을 적용하는 것은 변화를 더 빠르게 느끼게 만드는 좋은 방법입니다. - 데이터의 원격 소스를 기다릴 필요가 없기 때문입니다.
 
-With `mutate`, you can update your local data programmatically, while
-revalidating and finally replace it with the latest data.
+`mutate`를 사용하면, 프로그래밍 방식으로 로컬 데이터를 업데이트하는 동시에 유효성을 다시 검사하고, 최종적으로 (기존) 데이터를 최신 데이터로 바꿀 수 있습니다.
 
 ```js
 import useSWR, { mutate } from 'swr'
@@ -348,13 +339,13 @@ function Profile() {
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
         
-        // update the local data immediately, but disable the revalidation
+        // 로컬 데이터를 즉시 업데이트하되, 재 검증을 비활성화합니다.
         mutate('/api/user', { ...data, name: newName }, false)
         
-        // send a request to the API to update the source
+        // API에 소스 업데이트 요청을 보냅니다.
         await requestUpdateUsername(newName)
         
-        // trigger a revalidation (refetch) to make sure our local data is correct
+        // 로컬 데이터가 올바른지 확인하기 위해 재 검증 (refetch)을 트리거합니다.
         mutate('/api/user')
       }}>Uppercase my name!</button>
     </div>
@@ -362,23 +353,21 @@ function Profile() {
 }
 ```
 
-Clicking the button in the example above will send a POST request to modify the remote data, locally update the client data and
-try to fetch the latest one (revalidate).
+위의 예에서 버튼을 클릭하면 원격 데이터를 수정하고, 클라이언트 데이터를 로컬로 업데이트하고, 최신 데이터를 가져오도록 (재 검증) POST 요청을 보냅니다.
 
-But many POST APIs will just return the updated data directly, so we don’t need to revalidate again.
-Here’s an example showing the “local mutate - request - update” usage:
+그러나 많은 POST API는 업데이트된 데이터를 직접 반환하기 때문에 유효성을 재 검증 할 필요가 없습니다. 다음은 "local mutate-request-update" 사용법을 보여주는 예입니다.
 
 ```js
-mutate('/api/user', newUser, false)      // use `false` to mutate without revalidation
-mutate('/api/user', updateUser(newUser)) // `updateUser` is a Promise of the request,
-                                         // which returns the updated document
+mutate('/api/user', newUser, false)      // 재 검증없이 변경하려면 `false` 사용
+mutate('/api/user', updateUser(newUser)) // `updateUser` 는 업데이트 된 문서를 반환하는 
+                                         // request의 Promise 입니다.
 ```
 
-### Mutate Based on Current Data
+### 현재 데이터 기반 뮤테이트 (Mutate Based on Current Data)
 
-In many cases, you are receiving a single value back from your API and want to update a list of them.
+대부분의 경우, API에서 단일 값을 받고 그 목록을 업데이트 하려고 합니다.
 
-With `mutate`, you can pass an async function which will receive the current cached value, if any, and let you return an updated document.
+`mutate`를 사용하면, 현재 캐시된 값을 수신하고 업데이트 된 문서를 반환 할 수 있는 비동기 함수를 전달할 수 있습니다.
 
 ```js
 mutate('/api/users', async users => {
@@ -387,25 +376,25 @@ mutate('/api/users', async users => {
 })
 ```
 
-### Returned Data from Mutate
+### Mutate에서 반환된 데이터
 
-Most probably, you need some data to update the cache. The data is resolved or returned from the promise or async function you passed to `mutate`.
+대부분의 경우, 캐시를 업데이트 하려면 데이터가 필요합니다. 데이터는 `mutate`에 전달한 promise 또는 비동기 함수에서 확인되거나 반환됩니다.
 
-The function will return an updated document to let `mutate` update the corresponding cache value. It could throw an error somehow, every time when you call it.
+이 함수는 `mutate`가 해당 캐시 값을 업데이트 할 수 있도록 업데이트된 문서를 반환합니다. 호출할 때마다, 어떤 방식으로도 오류가 발생할 수 있습니다.
 
 ```js
 try {
   const user = await mutate('/api/user', updateUser(newUser))
 } catch (error) {
-  // Handle an error while updating the user here
+  // 여기에서 사용자를 업데이트하는 동안 오류 처리
 }
 ```
 
-### Bound `mutate()`
+### 바인딩 된 `mutate()`
 
-The SWR object returned by `useSWR` also contains a `mutate()` function that is pre-bound to the SWR's key.
+`useSWR`이 반환하는 SWR 객체에는 SWR의 키에 미리 바인딩 된 `mutate()` 함수도 포함되어 있습니다.
 
-It is functionally equivalent to the global `mutate` function but does not require the `key` parameter.
+전역 `mutate` 함수와 기능적으로 동일하지만, `key` 매개 변수가 필요하지 않습니다.
 
 ```js
 import useSWR from 'swr'
@@ -418,12 +407,12 @@ function Profile() {
       <h1>My name is {data.name}.</h1>
       <button onClick={async () => {
         const newName = data.name.toUpperCase()
-        // update the local data immediately
+        // 즉시 로컬 데이터 업데이트
         mutate({ ...data, name: newName }, false)
-        // send a request to the API to update the data
+        // API에 데이터 업데이트 요청을 보냅니다.
         await requestUpdateUsername(newName)
-        // revalidate (refetch)
-        // NOTE: key is not required when using useSWR's mutate as it's pre-bound
+        // 재검증 (refetch)
+        // 참고: useSWR의 mutate를 사용할 때는 키가 필요하지 않습니다.
         mutate()
       }}>Uppercase my name!</button>
     </div>
@@ -431,10 +420,9 @@ function Profile() {
 }
 ```
 
-### SSR with Next.js
+### Next.js를 사용한 SSR
 
-With the `initialData` option, you pass an initial value to the hook. It works perfectly with many SSR solutions
-such as `getServerSideProps` in [Next.js](https://github.com/zeit/next.js):
+`initialData` 옵션을 사용하면 초기 값을 Hook에 전달합니다. [Next.js](https://github.com/zeit/next.js)의 `getServerSideProps`와 같은 많은 SSR 솔루션과 완벽하게 작동합니다.
 
 ```js
 export async function getServerSideProps() {
@@ -450,12 +438,12 @@ function App(props) {
 }
 ```
 
-It is still a server-side rendered site, but it’s also fully powered by SWR in the client-side.
-Which means the data can be dynamic and update itself over time and user interactions.
+여전히 서버 사이드 렌더링 사이트이지만, 클라이언트 측의 SWR에 의해 완전히 구동됩니다.
+이는 데이터가 동적일 수 있으며 시간 및 사용자 상호 작용에 따라 자체적으로 업데이트 될 수 있음을 의미합니다.
 
-### Suspense Mode
+### 서스펜스 모드 (Suspense Mode)
 
-You can enable the `suspense` option to use SWR with React Suspense:
+React Suspense와 함께 SWR을 사용하려면`suspense` 옵션을 활성화 할 수 있습니다.
 
 ```js
 import { Suspense } from 'react'
@@ -475,17 +463,16 @@ function App() {
 }
 ```
 
-In Suspense mode, `data` is always the fetch response (so you don't need to check if it's `undefined`).
-But if an error occurred, you need to use an [error boundary](https://reactjs.org/docs/concurrent-mode-suspense.html#handling-errors) to catch it.
+서스펜스 모드에서 `data`는 항상 fetch response 이므로, `undefined` 인지 확인할 필요가 없습니다.
+그러나 오류가 발생하면 오류를 포착하기 위해 [error boundary](https://reactjs.org/docs/concurrent-mode-suspense.html#handling-errors)를 사용해야합니다.
 
-_Note that Suspense is not supported in SSR mode._
+참고: SSR 모드에서는 서스펜스가 지원되지 않습니다.
 
-### Error Retries
+### 오류 재시도 (Error Retries)
 
-By default, SWR uses the [exponential backoff algorithm](https://en.wikipedia.org/wiki/Exponential_backoff) to handle error retries.
-You can read more from the source code.
+기본적으로 SWR은 [exponential backoff algorithm](https://en.wikipedia.org/wiki/Exponential_backoff)을 사용하여 오류 재 시도를 처리합니다. 소스 코드에서 더 많은 것을 읽을 수 있습니다.
 
-It's also possible to override the behavior:
+동작을 재정의(override) 할 수도 있습니다.
 
 ```js
 useSWR(key, fetcher, {
@@ -493,39 +480,39 @@ useSWR(key, fetcher, {
     if (retryCount >= 10) return
     if (error.status === 404) return
 
-    // retry after 5 seconds
+    // 5초 후 재시도
     setTimeout(() => revalidate({ retryCount: retryCount + 1 }), 5000)
   }
 })
 ```
 
-### Prefetching Data
+### 데이터 미리 가져 오기 (Prefetching Data)
 
-There’re many ways to prefetch the data for SWR. For top-level requests, [`rel="preload"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content) is highly recommended:
+SWR에 대한 데이터를 미리 가져 오는 방법은 여러 가지가 있습니다. 최상위 요청의 경우 [`rel="preload"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content)를 적극 권장합니다.
 
 ```html
 <link rel="preload" href="/api/data" as="fetch" crossorigin="anonymous">
 ```
 
-This will prefetch the data before the JavaScript starts downloading. And your incoming fetch requests will reuse the result (including SWR, of course).
+이것은 JavaScript가 다운로드를 시작하기 전에 데이터를 미리 가져옵니다. 그리고 들어오는 fetch requests는 (물론 SWR를 포함하여) 결과를 재사용합니다
 
-Another choice is to prefetch the data conditionally. You can have a function to refetch and set the cache:
+또 다른 선택은 조건부로 데이터를 prefetch 하는 것입니다. 캐시를 다시 가져오고 설정하는 함수를 가질 수 있습니다.
 
 ```js
 function prefetch() {
   mutate('/api/data', fetch('/api/data').then(res => res.json()))
-  // the second parameter is a Promise
+  // 두 번째 매개 변수는 Promise 입니다.
   // SWR will use the result when it resolves
 }
 ```
 
-And use it when you need to preload the **resources** (for example when [hovering](https://github.com/GoogleChromeLabs/quicklink) [a](https://github.com/guess-js/guess) [link](https://instant.page)).
-Together with techniques like [page prefetching](https://nextjs.org/docs#prefetching-pages) in Next.js, you will be able to load both next page and data instantly.
+그리고 **리소스**를 미리 로드해야 할 때 사용합니다 (예: [hovering](https://github.com/GoogleChromeLabs/quicklink) [a](https://github.com/guess-js/guess) [link](https://instant.page)).
+Next.js의 [페이지 미리 가져 오기]와 같은 기술과 함께 다음 페이지와 데이터를 즉시 로드할 수 있습니다.
 
-### Request Deduplication
+### 중복 제거 요청 (Request Deduplication)
 
-SWR deduplicates requests by default. If you call the hook with the same key multiple times, only one request is made. Duplicated calls will receive a value from cache.
-Here, the 'api/user' key is used in two requests:
+SWR은 기본적으로 요청을 중복 제거합니다. 동일한 키로 Hook을 여러 번 호출하면, 요청이 하나만 생성됩니다. 중복된 호출은 캐시에서 값을 받습니다.
+여기, `api/user` 키는 두 가지 요청에 사용됩니다.
 
 ```js
 import useSWR from 'swr'
@@ -556,13 +543,13 @@ export default function App() {
 }
 ```
 
-By default, requests made within 2 seconds are deduped. This can be changed by setting the `dedupingInterval` option:
+기본적으로 2초 이내에 이루어진 요청은 중복 제거됩니다. `dedupingInterval` 옵션을 설정하여 변경할 수 있습니다.
 
 ```js
 const { data, error } = useSWR('/api/user', fetcher, { dedupingInterval: 1000 })
 ```
 
-This will deduplicate requests at an interval of 1 second.
+이렇게 하면 1초 간격으로 요청이 중복 제거됩니다.
 <br/>
 
 ## Authors
@@ -572,10 +559,10 @@ This will deduplicate requests at an interval of 1 second.
 - Joe Haddad ([@timer150](https://twitter.com/timer150)) - [Vercel](https://vercel.com)
 - Paco Coursey ([@pacocoursey](https://twitter.com/pacocoursey)) - [Vercel](https://vercel.com)
 
-Thanks to Ryan Chen for providing the awesome `swr` npm package name!
+멋진 `swr` npm 패키지 이름을 제공해 주신 Ryan Chen에게 감사드립니다!
 
 <br/>
 
-## License
+## 라이센스 (License)
 
 The MIT License.
